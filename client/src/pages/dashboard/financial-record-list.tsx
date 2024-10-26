@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import {
   FinancialRecord,
   useFinancialRecords,
-} from "../../contexts/financial-record-context.tsx";
+} from "../../contexts/financial-record-context";
 import { useTable, Column, CellProps, Row } from "react-table";
 
 interface EditableCellProps extends CellProps<FinancialRecord> {

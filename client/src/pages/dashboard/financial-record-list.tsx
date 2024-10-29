@@ -58,7 +58,7 @@ export const FinancialRecordList = () => {
   const columns: Array<Column<FinancialRecord>> = useMemo(
     () => [
       {
-        Header: "Description",
+        Header: "Name",
         accessor: "description",
         Cell: (props) => (
           <EditableCell

@@ -1,0 +1,70 @@
+/* Fullscreen centering container */
+.sign-in-page {
+  background-color: transparent; /* Dark blue background */
+  height: 50vh;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+/* Padding to prevent content from touching edges */
+  box-sizing: border-box;
+}
+
+/* Logo styling */
+.logo {
+  width: 800px; /* Adjust size as needed */
+  margin-bottom: -50px; /* Space between logo and button */
+
+}
+
+/* Center the text and button within a fixed-width container */
+.sign-in-container {
+  max-width: 300px; /* Limit container width to avoid full-width layout */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Heading (optional, can remove if not needed) */
+h1 {
+  color: #ffffff;
+  font-size: 1.5em;
+  margin: 0;
+}
+
+/* Styling for the login button */
+.sign-in-container button {
+  font-size: 1em;
+  border-radius: 25px;
+  background-color: #ffffff;
+  color: #0d0d1f;
+  font-weight: bold;
+  font-size: 25px;
+  padding: 15px 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds a slight shadow */
+  width: 100%; /* Full-width button within container */
+}
+
+/* Dashboard text and icon styling */
+.dashboard {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #ffffff;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dashboard-icon {
+  width: 20px; /* Adjust size if needed */
+  height: 20px;
+  border-radius: 50%; /* Circular icon */
+  background-color: #ffffff; /* Placeholder for icon color */
+}

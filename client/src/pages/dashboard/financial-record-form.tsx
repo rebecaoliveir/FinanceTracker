@@ -34,7 +34,7 @@ export const FinancialRecordForm = () => {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div className="form-field">
-          <label>Description:</label>
+          <label>Name:</label>
           <input
             type="text"
             required
@@ -62,11 +62,8 @@ export const FinancialRecordForm = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">Select a Category</option>
-            <option value="Food">Food</option>
-            <option value="Rent">Rent</option>
-            <option value="Salary">Salary</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Entertainment">Entertainment</option>
+            <option value="Tithe">Tithe</option>
+            <option value="Offering">Offering</option>
             <option value="Other">Other</option>
           </select>
         </div>
@@ -82,6 +79,7 @@ export const FinancialRecordForm = () => {
             <option value="Credit Card">Credit Card</option>
             <option value="Cash">Cash</option>
             <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <button type="submit" className="button">

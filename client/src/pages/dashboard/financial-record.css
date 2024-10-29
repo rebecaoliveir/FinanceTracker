@@ -6,7 +6,7 @@
   /* General styling for headers within the app */
   h1,
   h2 {
-    color: #2c3e50;
+    color: #d3d3d3;
     text-align: center;
   }
   
@@ -18,7 +18,7 @@
   
   /* Common class for all buttons */
   .button {
-    background-color: #3498db;
+    background-color: #283b48;
     color: #ffffff;
     border: none;
     padding: 8px 15px;
@@ -29,7 +29,7 @@
   }
   
   .button:hover {
-    background-color: #2980b9;
+    background-color: #d3d3d3;
   }
   .button-delete {
     background-color: #343cdb;
@@ -55,7 +55,7 @@
     background-color: transparent;
     border: 1px solid #ccc;
     border-radius: 5px;
-    color: #3498db;
+    color: #d3d3d3;
   }
   
   /* Labels for better readability */
@@ -85,13 +85,13 @@
   }
   
   .table th {
-    background-color: #3498db; /* Darker blue header background */
+    background-color: #283b48; /* Darker blue header background */
     color: white;
     font-size: 16px;
   }
   
   .table tbody tr:nth-child(odd) {
-    background-color: #f2f2f2; /* Zebra striping for rows, light grey */
+    background-color: transparent; /* Zebra striping for rows, light grey */
   }
   
   .table tbody tr:hover {

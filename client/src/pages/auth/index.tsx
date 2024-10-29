@@ -1,19 +1,29 @@
+import React from "react";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignUpButton,
 } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
+import logo from "./logo.png";
+import "./sign-in-page.css";
 
 export const Auth = () => {
   return (
-    <div className="sign-in-container">
+    <div className="sign-in-page">
       <SignedOut>
-        <h1> Welcome to Your Own Personal Finance Tracker!</h1>
-        <SignUpButton mode="modal" />
-        <SignInButton mode="modal" />
+      
+  
+      
+    
+        <div className="sign-in-container">
+          <img src={logo} alt="Cathedral Finances Logo" className="logo" />
+          <SignInButton mode="modal">
+            <button>LOG IN</button>
+          </SignInButton>
+        </div>
       </SignedOut>
+      
       <SignedIn>
         <Navigate to="/" />
       </SignedIn>

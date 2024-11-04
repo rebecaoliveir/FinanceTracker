@@ -1,6 +1,7 @@
 /* Centered container for the app */
 .dashboard-container {
-    width: 80%;
+    width: 60%;
+
   }
   
   /* General styling for headers within the app */
@@ -47,7 +48,7 @@
   }
   
   /* Common class for all input fields and selects */
-  .input {
+  .input, .input-select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -56,6 +57,11 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     color: #d3d3d3;
+    appearance: none; /* Remove default arrow for select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right 10px center; /* Position the dropdown arrow on the right */
+    background-repeat: no-repeat;
   }
   
   /* Labels for better readability */

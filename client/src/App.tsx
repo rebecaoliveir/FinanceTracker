@@ -4,6 +4,7 @@ import { Dashboard } from "./pages/dashboard";
 import { Auth } from "./pages/auth";
 import { FinancialRecordsProvider } from "./contexts/financial-record-context";
 import { SignedIn, UserButton } from "@clerk/clerk-react";
+import { Alldata } from "./pages/all-data";
 // import { dark } from "@clerk/themes";
 
 function App() {
@@ -21,11 +22,14 @@ function App() {
             path="/"
             element={
               <FinancialRecordsProvider>
-                <Dashboard />
+                 <Dashboard />
+              
+             {/*  <Alldata /> */}
               </FinancialRecordsProvider>
             }
           />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/data" element={<Alldata />} />
         </Routes>
       </div>
     </Router>

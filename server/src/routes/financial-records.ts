@@ -16,6 +16,16 @@ router.get("/getAllByUserID/:userId", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/getAllByUserID", async (req, res) => {
+  try {
+    const users = await FinancialRecordModel.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar usuários.' });
+  }
+});
+
+
 router.post("/", async (req: Request, res: Response) => {
   try {
     const newRecordBody = req.body;
@@ -27,6 +37,26 @@ router.post("/", async (req: Request, res: Response) => {
     res.status(500).send(err);
   }
 });
+
+router.get("/UsersByDate/:date", async (req: Request, res: Response) => {
+  try {
+    const dateParam = new Date(req.params.date);
+    const records = await FinancialRecordModel.find({ date: dateParam });
+
+    if (records.length === 0) {
+      return res.status(404).send("No records found for the specified date.");
+    }
+
+    // Extrair os IDs únicos de usuários dos registros encontrados
+    const userIds = [...new Set(records.map(record => record.userId))];
+    res.status(200).send(userIds);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+
+
 
 router.put("/:id", async (req: Request, res: Response) => {
   try {

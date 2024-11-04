@@ -1,0 +1,35 @@
+/* all-data.css */
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.user-table th {
+    background-color: #3a3a5e;
+    font-weight: bold;
+}
+
+.user-table tr:nth-child(even) {
+    background-color: #2e2e4a;
+}
+
+.user-table tr:hover {
+    background-color: #3f3f6b;
+}

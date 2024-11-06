@@ -3,12 +3,20 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
+  useClerk
 } from "@clerk/clerk-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import logo from "./logo.png";
 import "./sign-in-page.css";
 
 export const Auth = () => {
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/auth");
+  };
   return (
     <div className="sign-in-page">
       <SignedOut>
@@ -19,7 +27,7 @@ export const Auth = () => {
         <div className="sign-in-container">
           <img src={logo} alt="Cathedral Finances Logo" className="logo" />
           <SignInButton mode="modal">
-            <button>LOG IN</button>
+            <button onClick={handleLogout}>LOG IN</button>
           </SignInButton>
         </div>
       </SignedOut>

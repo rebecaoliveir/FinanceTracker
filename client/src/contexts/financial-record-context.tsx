@@ -9,6 +9,7 @@ export interface FinancialRecord {
   amount: number;
   category: string;
   paymentMethod: string;
+  campus: string | null | undefined;
 }
 
 interface FinancialRecordsContextType {
@@ -37,9 +38,24 @@ export const FinancialRecordsProvider = ({
     );
 
     if (response.ok) {
-      const records = await response.json();
-      console.log(records);
-      setRecords(records);
+      const allRecords = await response.json();
+
+      const today = new Date();
+      const currentDay = today.getDate();
+      const currentMonth = today.getMonth() + 1;
+      const currentYear = today.getFullYear();
+
+      const filteredRecords = allRecords.filter((record: any) => {
+        const date = new Date(record.date);
+        return (
+          date.getDate() === currentDay &&
+          date.getMonth() + 1 === currentMonth &&
+          date.getFullYear() === currentYear &&
+          record.campus === record.user.userName
+        );
+      });
+
+      setRecords(filteredRecords);
     }
   };
 
@@ -56,12 +72,10 @@ export const FinancialRecordsProvider = ({
       },
     });
 
-    try {
-      if (response.ok) {
-        const newRecord = await response.json();
-        setRecords((prev) => [...prev, newRecord]);
-      }
-    } catch (err) {}
+    if (response.ok) {
+      const newRecord = await response.json();
+      setRecords((prev) => [...prev, newRecord]);
+    }
   };
 
   const updateRecord = async (id: string, newRecord: FinancialRecord) => {
@@ -76,20 +90,12 @@ export const FinancialRecordsProvider = ({
       }
     );
 
-    try {
-      if (response.ok) {
-        const newRecord = await response.json();
-        setRecords((prev) =>
-          prev.map((record) => {
-            if (record._id === id) {
-              return newRecord;
-            } else {
-              return record;
-            }
-          })
-        );
-      }
-    } catch (err) {}
+    if (response.ok) {
+      const updatedRecord = await response.json();
+      setRecords((prev) =>
+        prev.map((record) => (record._id === id ? updatedRecord : record))
+      );
+    }
   };
 
   const deleteRecord = async (id: string) => {
@@ -100,14 +106,12 @@ export const FinancialRecordsProvider = ({
       }
     );
 
-    try {
-      if (response.ok) {
-        const deletedRecord = await response.json();
-        setRecords((prev) =>
-          prev.filter((record) => record._id !== deletedRecord._id)
-        );
-      }
-    } catch (err) {}
+    if (response.ok) {
+      const deletedRecord = await response.json();
+      setRecords((prev) =>
+        prev.filter((record) => record._id !== deletedRecord._id)
+      );
+    }
   };
 
   return (

@@ -8,7 +8,6 @@ export const FinancialRecordForm = () => {
   const [category, setCategory] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
   const { addRecord } = useFinancialRecords();
-
   const { user } = useUser();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,6 +20,7 @@ export const FinancialRecordForm = () => {
       amount: parseFloat(amount),
       category: category,
       paymentMethod: paymentMethod,
+      campus: user?.username, // Include campus in new record
     };
 
     addRecord(newRecord);
@@ -28,6 +28,7 @@ export const FinancialRecordForm = () => {
     setAmount("");
     setCategory("");
     setPaymentMethod("");
+    
   };
 
   return (

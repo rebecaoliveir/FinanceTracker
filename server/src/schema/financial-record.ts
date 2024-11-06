@@ -7,10 +7,12 @@ interface FinancialRecord {
   amount: number;
   category: string;
   paymentMethod: string;
+  campus: string; // Added campus field
 }
 
 const financialRecordSchema = new mongoose.Schema<FinancialRecord>({
   userId: { type: String, required: true },
+  campus: { type: String, required: true }, // Make campus required
   date: { type: Date, required: true },
   description: { type: String, required: true },
   amount: { type: Number, required: true },

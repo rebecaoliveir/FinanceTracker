@@ -5,10 +5,11 @@ import "./financial-record.css";
 import { useFinancialRecords } from "../../contexts/financial-record-context";
 import { useMemo } from "react";
 
+
 export const Dashboard = () => {
   const { user } = useUser();
   const { records } = useFinancialRecords();
-
+console.log(user)
   const totalMonthly = useMemo(() => {
     let totalAmount = 0;
     records.forEach((record) => {

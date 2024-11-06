@@ -3,7 +3,7 @@ import {
   FinancialRecord,
   useFinancialRecords,
 } from "../../contexts/financial-record-context";
-import { useTable, Column, CellProps, Row } from "react-table";
+import { useTable, Column, CellProps } from "react-table";
 
 interface EditableCellProps extends CellProps<FinancialRecord> {
   updateRecord: (rowIndex: number, columnId: string, value: any) => void;
@@ -53,6 +53,7 @@ export const FinancialRecordList = () => {
   const updateCellRecord = (rowIndex: number, columnId: string, value: any) => {
     const id = records[rowIndex]?._id;
     updateRecord(id ?? "", { ...records[rowIndex], [columnId]: value });
+    console.log(rowIndex);
   };
 
   const columns: Array<Column<FinancialRecord>> = useMemo(
@@ -102,6 +103,25 @@ export const FinancialRecordList = () => {
         ),
       },
       {
+        Header: "Campus",
+        accessor: "campus",
+        Cell: (props) => {
+          // Converte a primeira letra para maiúscula e o restante para minúscula
+          const formattedValue = props.value
+            ? props.value.charAt(0).toUpperCase() + props.value.slice(1).toLowerCase()
+            : "";
+      
+          return (
+            <EditableCell
+              {...props}
+              value={formattedValue} // Passa o valor formatado
+              updateRecord={updateCellRecord}
+              editable={true}
+            />
+          );
+        },
+      },
+      {
         Header: "Date",
         accessor: "date",
         Cell: (props) => (
@@ -137,21 +157,21 @@ export const FinancialRecordList = () => {
     <div className="table-container">
       <table {...getTableProps()} className="table">
         <thead>
-          {headerGroups.map((hg) => (
-            <tr {...hg.getHeaderGroupProps()}>
-              {hg.headers.map((column) => (
-                <th {...column.getHeaderProps()}> {column.render("Header")}</th>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, idx) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                 ))}
               </tr>
             );

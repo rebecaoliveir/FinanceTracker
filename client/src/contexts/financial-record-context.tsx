@@ -28,13 +28,14 @@ export const FinancialRecordsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const apiurl = import.meta.env.VITE_API_URL;
   const [records, setRecords] = useState<FinancialRecord[]>([]);
   const { user } = useUser();
 
   const fetchRecords = async () => {
     if (!user) return;
     const response = await fetch(
-      `http://localhost:3100/financial-records/getAllByUserID/${user.id}`
+      `${apiurl}financial-records/getAllByUserID/${user.id}`
     );
 
     if (response.ok) {
@@ -64,7 +65,7 @@ export const FinancialRecordsProvider = ({
   }, [user]);
 
   const addRecord = async (record: FinancialRecord) => {
-    const response = await fetch("http://localhost:3100/financial-records", {
+    const response = await fetch(`${apiurl}financial-records`, {
       method: "POST",
       body: JSON.stringify(record),
       headers: {
@@ -80,7 +81,7 @@ export const FinancialRecordsProvider = ({
 
   const updateRecord = async (id: string, newRecord: FinancialRecord) => {
     const response = await fetch(
-      `http://localhost:3100/financial-records/${id}`,
+      `${apiurl}financial-records/${id}`,
       {
         method: "PUT",
         body: JSON.stringify(newRecord),
@@ -100,7 +101,7 @@ export const FinancialRecordsProvider = ({
 
   const deleteRecord = async (id: string) => {
     const response = await fetch(
-      `http://localhost:3100/financial-records/${id}`,
+      `${apiurl}financial-records/${id}`,
       {
         method: "DELETE",
       }

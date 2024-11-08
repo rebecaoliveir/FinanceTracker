@@ -5,6 +5,7 @@ import { useUser } from "@clerk/clerk-react";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+
 function formatDate(dateString: any) {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
@@ -28,17 +29,17 @@ interface User {
 
 // Component with main data
 export const Alldata = () => {
+  const apiurl = import.meta.env.VITE_API_URL;
   const pdfRef = useRef<HTMLDivElement | null>(null);
   const { user } = useUser();
   const [financialRecords, setFinancialRecords] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
+  console.log(apiurl);
   useEffect(() => {
     if (user) { 
       const fetchFinancialRecords = async () => {
-        console.log(user)
         try {
-          const response = await fetch("http://localhost:3100/financial-records/getAllByUserID", {
+          const response = await fetch(`${apiurl}financial-records/getAllByUserID`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -48,7 +49,6 @@ export const Alldata = () => {
           if (!response.ok) {
             throw new Error('Error fetching financial records');
           }
-    
           const data = await response.json();
           const filteredData = data.filter((record: any) => record.campus === user.username);
           setFinancialRecords(filteredData); // Salva os dados filtrados no estado

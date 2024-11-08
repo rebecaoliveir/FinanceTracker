@@ -4,7 +4,7 @@ import financialRecordRouter from "./routes/financial-records";
 import cors from "cors";
 
 const app: Express = express();
-const port = process.env.PORT || 3100;
+const port = 3100;
 
 app.use(express.json());
 app.use(cors());
@@ -19,6 +19,6 @@ mongoose
 
 app.use("/financial-records", financialRecordRouter);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server Running on Port ${port}`);
 });

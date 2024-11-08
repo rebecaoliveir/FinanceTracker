@@ -1,9 +1,14 @@
 /* Styling for the search bar to match the dark theme aesthetic */
+
+.data-page {
+    
+}
+
 .search-bar {
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
-    margin-top: 50px;
+    /* margin-bottom: 20px;
+    margin-top: 50px; */
     background-color: #3a3a5e; /* Dark background for the input */
     border: 1px solid #555; /* Border to match the theme */
     border-radius: 4px;
@@ -48,4 +53,32 @@
 
 .user-table tr:hover {
     background-color: #3f3f6b;
+}
+
+.d-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+
+    button {
+        width: 200px;
+        background-color: #3a3a5e;
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+
+        &:hover {
+            background-color: #4a4a6e;
+        }
+    }
 }

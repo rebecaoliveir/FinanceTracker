@@ -11,33 +11,35 @@ import { useUser } from "@clerk/clerk-react";
 // import { dark } from "@clerk/themes";
 
 function App() {
+  const { user } = useUser();
   
   return (
     <Router>
       <div className="app-container">
         <div className="navbar">
-        <Link to="/"> Form</Link>
-        <Link to="/data"> All Givers</Link>
-        <Link to="/calculator"> Calculator</Link>
-
-       
-
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          {user ? (
+            <>
+              <Link to="/"> Form</Link>
+              <Link to="/data"> All Givers</Link>
+              <Link to="/calculator"> Calculator</Link>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </>
+          ) : (<></>)}
         </div>
         <Routes>
-        <Route path="/auth" element={<Auth />} />
         <Route
           path="/"
           element={
             <FinancialRecordsProvider>
-              <Dashboard />
-              {/* <Alldata /> */}
+              <Auth />
             </FinancialRecordsProvider>
           }
         />
-        <Route path="/data" element={<Alldata />} />
+        <Route path="/dash" element={ <FinancialRecordsProvider> <Dashboard /> </FinancialRecordsProvider>} />
+        <Route path="/data" element={ <FinancialRecordsProvider> <Alldata /> </FinancialRecordsProvider>} />
+        <Route path="/calculator" element={ <FinancialRecordsProvider> <Calculator /> </FinancialRecordsProvider>} />
         </Routes>
       </div>
     </Router>

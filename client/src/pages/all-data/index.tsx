@@ -1,11 +1,12 @@
 import ReactDOM from 'react-dom/client';
 import './all-data.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useUser } from "@clerk/clerk-react";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 function formatDate(dateString: any) {
     const date = new Date(dateString);
-    
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-indexed
     const year = date.getFullYear();
@@ -27,13 +28,12 @@ interface User {
 
 // Component with main data
 export const Alldata = () => {
+  const pdfRef = useRef<HTMLDivElement | null>(null);
   const { user } = useUser();
   const [financialRecords, setFinancialRecords] = useState<User[]>([]);
-  
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    
     if (user) { 
       const fetchFinancialRecords = async () => {
         console.log(user)
@@ -50,10 +50,6 @@ export const Alldata = () => {
           }
     
           const data = await response.json();
-          
-    
-          console.log(data, user);
-          
           const filteredData = data.filter((record: any) => record.campus === user.username);
           setFinancialRecords(filteredData); // Salva os dados filtrados no estado
   
@@ -63,14 +59,7 @@ export const Alldata = () => {
       };
       fetchFinancialRecords(); 
     }
-
-      console.log(user, "Chamada")
-      
-       
   }, [user]);
-
-
-  
 
   // Filter the records based on the search query
   const filteredRecords = financialRecords.filter((record) =>
@@ -79,46 +68,82 @@ export const Alldata = () => {
     )
   );
 
+  const generatePDF = () => {
+    const input = pdfRef.current;
+    if (input) {
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const margin = 15; // Custom margin in mm
+        const imgWidth = pdf.internal.pageSize.width - 4 * margin;
+        const pageHeight = pdf.internal.pageSize.height;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        let heightLeft = imgHeight;
+        let position = margin; // Start at the top margin
+
+        pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight + margin; // Add margin at the top of each new page
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save('financial_records.pdf');
+      });
+    }
+  };
+
   return (
     <div className="data-page">
       <h1>All Givers</h1>
+      <div className='d-btn'>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-bar" // Added the search-bar class here
+        />
+        <button className='btn' onClick={generatePDF}>PDF</button>
+      </div>
       
       {/* Search Bar */}
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-bar" // Added the search-bar class here
-      />
       
       {filteredRecords.length === 0 ? (
         <><h1>No Data Returned</h1></>
       ) : (
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Category</th>
-              <th>Payment Method</th>
-              <th>Campus</th> {/* New Campus Column */}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredRecords.map(user => (
-              <tr key={user._id}>
-                <td>{user.description}</td>
-                <td>{formatDate(user.date)}</td>
-                <td>{user.amount}</td>
-                <td>{user.category}</td>
-                <td>{user.paymentMethod}</td>
-                <td>{user.campus}</td> {/* Display campus */}
+        <div ref={pdfRef}>
+
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Payment Method</th>
+                <th>Campus</th> {/* New Campus Column */}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredRecords.map(user => (
+                <tr key={user._id}>
+                  <td>{user.description}</td>
+                  <td>{formatDate(user.date)}</td>
+                  <td>{user.amount}</td>
+                  <td>{user.category}</td>
+                  <td>{user.paymentMethod}</td>
+                  <td>{user.campus}</td> {/* Display campus */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

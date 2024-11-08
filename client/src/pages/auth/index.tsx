@@ -15,15 +15,11 @@ export const Auth = () => {
 
   const handleLogout = async () => {
     await signOut();
-    navigate("/auth");
+    navigate("/");
   };
   return (
     <div className="sign-in-page">
       <SignedOut>
-      
-  
-      
-    
         <div className="sign-in-container">
           <img src={logo} alt="Cathedral Finances Logo" className="logo" />
           <SignInButton mode="modal">
@@ -33,7 +29,7 @@ export const Auth = () => {
       </SignedOut>
       
       <SignedIn>
-        <Navigate to="/" />
+        <Navigate to="/dash" />
       </SignedIn>
     </div>
   );

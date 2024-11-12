@@ -1,8 +1,5 @@
 /* Styling for the search bar to match the dark theme aesthetic */
 
-.data-page {
-    
-}
 
 .search-bar {
     width: 100%;
@@ -39,6 +36,7 @@
     padding: 12px 15px;
     border: 1px solid #555;
     text-align: left;
+   
 }
 
 .user-table th {

@@ -7,6 +7,7 @@ export const FinancialRecordForm = () => {
   const [amount, setAmount] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [serviceName, setServiceName] = useState<string>(""); // New service name state
   const { addRecord } = useFinancialRecords();
   const { user } = useUser();
 
@@ -20,7 +21,8 @@ export const FinancialRecordForm = () => {
       amount: parseFloat(amount),
       category: category,
       paymentMethod: paymentMethod,
-      campus: user?.username, // Include campus in new record
+      campus: user?.username,
+      serviceName: serviceName // Include service name
     };
 
     addRecord(newRecord);
@@ -28,7 +30,7 @@ export const FinancialRecordForm = () => {
     setAmount("");
     setCategory("");
     setPaymentMethod("");
-    
+    setServiceName("");
   };
 
   return (
@@ -65,7 +67,9 @@ export const FinancialRecordForm = () => {
             <option value="">Select a Category</option>
             <option value="Tithe">Tithe</option>
             <option value="Offering">Offering</option>
-            <option value="Other">Other</option>
+            <option value="Mission">Mission</option>
+            <option value="PG Offerings">PG Offering</option>
+            <option value="Projects">Projects</option>
           </select>
         </div>
         <div className="form-field">
@@ -77,11 +81,26 @@ export const FinancialRecordForm = () => {
             onChange={(e) => setPaymentMethod(e.target.value)}
           >
             <option value="">Select a Payment Method</option>
-            <option value="Credit Card">Credit Card</option>
+            <option value="Card Payment">Card Payment</option>
             <option value="Cash">Cash</option>
             <option value="Bank Transfer">Bank Transfer</option>
+            <option value="App">App</option>
             <option value="Other">Other</option>
           </select>
+        </div>
+        <div className="form-field">
+          <label>Service Name:</label>
+          <input
+            list="serviceNames"
+            value={serviceName}
+            onChange={(e) => setServiceName(e.target.value)}
+            className="input"
+          />
+          <datalist id="serviceNames">
+            <option value="Culto de Domingo" />
+            <option value="Culto de Quinta" />
+            <option value="PG" />
+          </datalist>
         </div>
         <button type="submit" className="button">
           Add Record

@@ -121,6 +121,7 @@ export const FinancialRecordList = () => {
           );
         },
       },
+      
       {
         Header: "Date",
         accessor: "date",

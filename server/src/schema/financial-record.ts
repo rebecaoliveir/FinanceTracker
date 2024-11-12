@@ -8,7 +8,9 @@ interface FinancialRecord {
   category: string;
   paymentMethod: string;
   campus: string; // Added campus field
+  serviceName: string; // New service name field
 }
+
 
 const financialRecordSchema = new mongoose.Schema<FinancialRecord>({
   userId: { type: String, required: true },
@@ -18,6 +20,7 @@ const financialRecordSchema = new mongoose.Schema<FinancialRecord>({
   amount: { type: Number, required: true },
   category: { type: String, required: true },
   paymentMethod: { type: String, required: true },
+  serviceName: { type: String, required: true }, // Make service name required
 });
 
 const FinancialRecordModel = mongoose.model<FinancialRecord>(
